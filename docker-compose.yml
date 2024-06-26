@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  tentacle:
+    image: octopusdeploy/tentacle:latest
+    container_name: OctopusTentacle
+    environment:
+      ACCEPT_EULA: "Y"
+      ServerUrl: "http://octopus-deploy:8080" # octopus deploy server on running specific port
+      ServerUsername: "admin"  # Octopus Deploy username
+      ServerPassword: "admin@123"  # Octopus Deploy password
+      #ServerApiKey: "API-WMQWGSUBX78XUURJIWRCJT13TYRXE3"
+      CommunicationMode: "Listening"
+      TentaclePort: "10933"               # Tentacle's listening port
+      TargetEnvironment: "Dev"            # Environment in Octopus Deploy
+      TargetRole: "dhoni-app"             # Role assigned to the Tentacle
+      TentacleHostname: "wingsfin"    # Tentacle hostname
+      Space: "Default"
+    ports:
+      - "10934:10934"  # Ensure this port is not used by any other service
+    volumes:
+      - ./tentacle-data:/etc/octopus
+    restart: unless-stopped
+    networks:
+      - wingsfinnet
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:10934 || exit 1"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  wingsfinnet:
+    external: true
+    name: wingsfinnet
+
+
