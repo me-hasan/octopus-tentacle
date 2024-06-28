@@ -7,8 +7,9 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       ServerUrl: "http://octopus-deploy:8080" # octopus deploy server on running specific port
-      ServerUsername: "admin"  # Octopus Deploy username
-      ServerPassword: "admin@123"  # Octopus Deploy password
+      ServerThumbprint: "967E3F81C817020ACC4441FC6E159C45EEFDF135"
+      #ServerUsername: "admin"  # Octopus Deploy username
+      #ServerPassword: "admin@123"  # Octopus Deploy password
       #ServerApiKey: "API-WMQWGSUBX78XUURJIWRCJT13TYRXE3"
       CommunicationMode: "Listening"
       TentaclePort: "10933"               # Tentacle's listening port
@@ -33,5 +34,3 @@ networks:
   wingsfinnet:
     external: true
     name: wingsfinnet
-
-
